@@ -664,7 +664,7 @@
                 <div class="status-card" style="background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);"><h3>Payment 2</h3><p>₹20K</p></div>
             </div>
             <div style="text-align: center; margin-top: 30px;">
-                <p style="color: #666; margin-bottom: 20px; font-size: 14px;">You will receive an email confirmation with your registration details.<br>Please keep your phone number and credentials safe.</p>
+                <p style="color: #666; margin-bottom: 20px; font-size: 14px;">You will receive an email confirmation with your registration details.<br>Please keep your phone number and credentia[...]</p>
                 <button class="btn-submit" onclick="restartApplication()" style="padding: 12px 35px;">Start New Registration</button>
             </div>
         </div>
@@ -691,10 +691,12 @@
         ];
 
         function showStep(step) {
-            document.querySelectorAll('[id^="step"][id$!="Indicator"]').forEach(el => {
-                if (el.id.match(/^step\d+$/)) el.classList.add('hidden');
+            // Fixed invalid CSS selector that caused a runtime error in some browsers
+            document.querySelectorAll('[id^="step"]').forEach(el => {
+                if (el.id !== 'stepIndicator' && el.id.match(/^step\d+$/)) el.classList.add('hidden');
             });
-            document.getElementById('step' + step).classList.remove('hidden');
+            const target = document.getElementById('step' + step);
+            if (target) target.classList.remove('hidden');
             updateStepIndicator(step);
             currentStep = step;
             window.scrollTo(0, 0);
