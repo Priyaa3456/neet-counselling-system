@@ -13,16 +13,16 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ff9800 0%, #ffffff 100%);
             min-height: 100vh;
             padding: 20px 0;
         }
 
         header {
-            background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
+            background: linear-gradient(135deg, #ff9800 0%, #fb8c00 100%);
             color: white;
             padding: 25px 0;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -49,24 +49,27 @@
             width: 70px;
             height: 70px;
             border-radius: 50%;
-            border: 4px solid #ff9800;
+            border: 4px solid white;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
             font-size: 18px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
         }
 
         .header-title h1 {
             font-size: 24px;
             font-weight: 700;
             margin-bottom: 5px;
+            color: white;
         }
 
         .header-title p {
             font-size: 12px;
-            opacity: 0.9;
+            opacity: 0.95;
+            color: white;
         }
 
         .container {
@@ -78,9 +81,10 @@
         .card {
             background: white;
             border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 25px rgba(255, 152, 0, 0.2);
             padding: 40px;
             margin-bottom: 30px;
+            border-top: 5px solid #ff9800;
         }
 
         .card-header {
@@ -89,7 +93,7 @@
         }
 
         .card-header h2 {
-            color: #1a237e;
+            color: #ff9800;
             font-size: 28px;
             margin-bottom: 10px;
         }
@@ -114,17 +118,19 @@
         input, select, textarea {
             width: 100%;
             padding: 12px 15px;
-            border: 2px solid #ddd;
+            border: 2px solid #ff9800;
             border-radius: 6px;
             font-size: 14px;
             font-family: inherit;
             transition: all 0.3s;
+            background: #fffbf7;
         }
 
         input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: #ff9800;
-            box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.1);
+            box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.2);
+            background: white;
         }
 
         .steps {
@@ -146,14 +152,15 @@
         .step-number {
             width: 45px;
             height: 45px;
-            background: #ddd;
+            background: #fff3e0;
+            border: 2px solid #ff9800;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 8px;
             font-weight: bold;
-            color: #666;
+            color: #ff9800;
             transition: all 0.3s;
         }
 
@@ -167,6 +174,7 @@
         .step.completed .step-number {
             background: #4caf50;
             color: white;
+            border-color: #4caf50;
         }
 
         .step-label {
@@ -184,7 +192,7 @@
         }
 
         .btn-submit {
-            background: #4caf50;
+            background: #ff9800;
             color: white;
             padding: 12px 35px;
             border: none;
@@ -197,9 +205,9 @@
         }
 
         .btn-submit:hover {
-            background: #45a049;
+            background: #fb8c00;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+            box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
         }
 
         .btn-submit:disabled {
@@ -230,6 +238,7 @@
             background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
             border-radius: 12px;
             margin: 30px 0;
+            border: 2px solid #ff9800;
         }
 
         .qr-code {
@@ -239,10 +248,11 @@
             padding: 20px;
             background: white;
             border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 20px rgba(255, 152, 0, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
+            border: 2px solid #ff9800;
         }
 
         .qr-code img {
@@ -288,13 +298,14 @@
         }
 
         .file-item {
-            background: #f5f5f5;
+            background: #fff3e0;
             padding: 12px 15px;
             border-radius: 6px;
             margin-bottom: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-left: 4px solid #ff9800;
         }
 
         .college-list {
@@ -305,7 +316,7 @@
         }
 
         .college-card {
-            border: 2px solid #ddd;
+            border: 2px solid #ff9800;
             border-radius: 10px;
             padding: 20px;
             cursor: pointer;
@@ -315,14 +326,15 @@
         }
 
         .college-card:hover {
-            border-color: #ff9800;
-            box-shadow: 0 5px 20px rgba(255, 152, 0, 0.2);
+            border-color: #fb8c00;
+            box-shadow: 0 5px 20px rgba(255, 152, 0, 0.3);
             transform: translateY(-5px);
         }
 
         .college-card.selected {
             border-color: #4caf50;
             background: #f1f8f4;
+            box-shadow: 0 5px 20px rgba(76, 175, 80, 0.3);
         }
 
         .college-rank {
@@ -339,7 +351,7 @@
         .college-name {
             font-size: 17px;
             font-weight: bold;
-            color: #1a237e;
+            color: #ff9800;
             margin: 10px 0;
         }
 
@@ -356,7 +368,7 @@
             right: 15px;
             width: 24px;
             height: 24px;
-            border: 2px solid #ddd;
+            border: 2px solid #ff9800;
             border-radius: 4px;
             background: white;
         }
@@ -387,9 +399,9 @@
         }
 
         .alert-info {
-            background: #d1ecf1;
-            color: #0c5460;
-            border-left-color: #2196f3;
+            background: #fff3e0;
+            color: #e65100;
+            border-left-color: #ff9800;
         }
 
         .dashboard-grid {
@@ -400,11 +412,11 @@
         }
 
         .status-card {
-            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+            background: linear-gradient(135deg, #ff9800 0%, #fb8c00 100%);
             color: white;
             padding: 25px;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(255, 152, 0, 0.3);
             text-align: center;
         }
 
@@ -421,7 +433,7 @@
         }
 
         footer {
-            background: #1a237e;
+            background: #ff9800;
             color: white;
             padding: 30px 0;
             margin-top: 50px;
@@ -430,7 +442,7 @@
 
         footer p {
             font-size: 13px;
-            opacity: 0.8;
+            opacity: 0.9;
             margin: 5px 0;
         }
 
@@ -644,12 +656,12 @@
             </div>
             <div class="alert alert-success">✓ Your application is complete and all payments have been received.</div>
             <div class="dashboard-grid">
-                <div class="status-card"><h3>Registration</h3><p>✓</p></div>
-                <div class="status-card"><h3>NEET Details</h3><p>✓</p></div>
-                <div class="status-card"><h3>Documents</h3><p>✓</p></div>
-                <div class="status-card"><h3>Payment 1</h3><p>₹500</p></div>
-                <div class="status-card"><h3>College Choice</h3><p>✓</p></div>
-                <div class="status-card"><h3>Payment 2</h3><p>₹20K</p></div>
+                <div class="status-card" style="background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);"><h3>Registration</h3><p>✓</p></div>
+                <div class="status-card" style="background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);"><h3>NEET Details</h3><p>✓</p></div>
+                <div class="status-card" style="background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);"><h3>Documents</h3><p>✓</p></div>
+                <div class="status-card" style="background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);"><h3>Payment 1</h3><p>₹500</p></div>
+                <div class="status-card" style="background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);"><h3>College Choice</h3><p>✓</p></div>
+                <div class="status-card" style="background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);"><h3>Payment 2</h3><p>₹20K</p></div>
             </div>
             <div style="text-align: center; margin-top: 30px;">
                 <p style="color: #666; margin-bottom: 20px; font-size: 14px;">You will receive an email confirmation with your registration details.<br>Please keep your phone number and credentials safe.</p>
@@ -664,6 +676,134 @@
     </footer>
 
     <script>
-        let selectedColleges = [];\n        let documents = [];\n        let currentStep = 1;\n        const colleges = [\n            { id: 1, name: 'AIIMS Ranchi', state: 'Jharkhand', seats: 100, rank: 1 },\n            { id: 2, name: 'Rajendra Institute of Medical Sciences', state: 'Jharkhand', seats: 85, rank: 2 },\n            { id: 3, name: 'National Institute of Medical Sciences', state: 'Rajasthan', seats: 150, rank: 3 },\n            { id: 4, name: 'GMC Chandigarh', state: 'Chandigarh', seats: 120, rank: 4 },\n            { id: 5, name: 'PGIMER Chandigarh', state: 'Chandigarh', seats: 110, rank: 5 },\n            { id: 6, name: 'Delhi Medical College', state: 'Delhi', seats: 130, rank: 6 },\n            { id: 7, name: 'Christian Medical College', state: 'Tamil Nadu', seats: 140, rank: 7 },\n            { id: 8, name: 'JIPMER Puducherry', state: 'Puducherry', seats: 135, rank: 8 }\n        ];\n\n        function showStep(step) {\n            document.querySelectorAll('[id^=\"step\"][id$$=\"\"]').forEach(el => el.classList.add('hidden'));\n            document.getElementById('step' + step).classList.remove('hidden');\n            updateStepIndicator(step);\n            currentStep = step;\n            window.scrollTo(0, 0);\n        }\n\n        function updateStepIndicator(step) {\n            const steps = document.querySelectorAll('.step');\n            steps.forEach((s, idx) => {\n                s.classList.remove('active', 'completed');\n                if (idx + 1 === step) {\n                    s.classList.add('active');\n                } else if (idx + 1 < step) {\n                    s.classList.add('completed');\n                }\n            });\n        }\n\n        function goToStep1() { showStep(1); }\n        function goToStep2(e) { e.preventDefault(); showStep(2); }\n        function goToStep3(e) { e.preventDefault(); showStep(3); renderColleges(); }\n        function goToStep4(e) { e.preventDefault(); showStep(4); }\n        function goToStep5() { showStep(5); renderColleges(); }\n        function goToStep6() { showStep(6); }\n\n        function handleFileChange(e) {\n            const files = Array.from(e.target.files);\n            if (documents.length + files.length > 5) {\n                document.getElementById('step3Error').textContent = '✗ Maximum 5 documents allowed';\n                document.getElementById('step3Error').classList.remove('hidden');\n                return;\n            }\n            documents = [...documents, ...files];\n            renderFileList();\n        }\n\n        function renderFileList() {\n            const fileList = document.getElementById('fileList');\n            if (documents.length === 0) {\n                fileList.innerHTML = '';\n                return;\n            }\n            fileList.innerHTML = '<label>Selected Documents (' + documents.length + '):</label>' +\n                documents.map((doc, idx) => `\n                <div class=\"file-item\">\n                    <span>✓ ${doc.name}</span>\n                    <button type=\"button\" onclick=\"removeFile(${idx})\" style=\"background: #f44336; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;\">Remove</button>\n                </div>\n            `).join('');\n        }\n\n        function removeFile(idx) {\n            documents.splice(idx, 1);\n            renderFileList();\n        }\n\n        function renderColleges() {\n            const collegeList = document.getElementById('collegeList');\n            collegeList.innerHTML = colleges.map(college => `\n                <div class=\"college-card ${selectedColleges.includes(college.id) ? 'selected' : ''}\" onclick=\"toggleCollege(${college.id})\">\n                    <div class=\"checkbox-custom\"></div>\n                    <div class=\"college-rank\">Rank #${college.rank}</div>\n                    <div class=\"college-name\">${college.name}</div>\n                    <div class=\"college-info\">📍 ${college.state}<br>👥 Seats: ${college.seats}</div>\n                </div>\n            `).join('');\n        }\n\n        function toggleCollege(collegeId) {\n            if (selectedColleges.includes(collegeId)) {\n                selectedColleges = selectedColleges.filter(id => id !== collegeId);\n            } else {\n                if (selectedColleges.length < 5) {\n                    selectedColleges.push(collegeId);\n                } else {\n                    document.getElementById('step5Error').textContent = '✗ Maximum 5 colleges can be selected';\n                    document.getElementById('step5Error').classList.remove('hidden');\n                    return;\n                }\n            }\n            document.getElementById('collegeCount').textContent = selectedColleges.length;\n            renderColleges();\n            document.getElementById('step5Error').classList.add('hidden');\n        }\n\n        function completePayment500() {\n            document.getElementById('step4Success').classList.remove('hidden');\n            setTimeout(() => showStep(5), 2000);\n        }\n\n        function completePayment20000() {\n            document.getElementById('step6Success').classList.remove('hidden');\n            setTimeout(() => showStep(7), 2000);\n        }\n\n        function restartApplication() {\n            selectedColleges = [];\n            documents = [];\n            document.getElementById('phone').value = '';\n            document.getElementById('dob').value = '';\n            document.getElementById('neetRoll').value = '';\n            document.getElementById('neetScore').value = '';\n            document.getElementById('category').value = '';\n            document.getElementById('fileInput').value = '';\n            renderFileList();\n            showStep(1);\n        }\n\n        // Initialize\n        renderColleges();\n    </script>
+        let selectedColleges = [];
+        let documents = [];
+        let currentStep = 1;
+        const colleges = [
+            { id: 1, name: 'AIIMS Ranchi', state: 'Jharkhand', seats: 100, rank: 1 },
+            { id: 2, name: 'Rajendra Institute of Medical Sciences', state: 'Jharkhand', seats: 85, rank: 2 },
+            { id: 3, name: 'National Institute of Medical Sciences', state: 'Rajasthan', seats: 150, rank: 3 },
+            { id: 4, name: 'GMC Chandigarh', state: 'Chandigarh', seats: 120, rank: 4 },
+            { id: 5, name: 'PGIMER Chandigarh', state: 'Chandigarh', seats: 110, rank: 5 },
+            { id: 6, name: 'Delhi Medical College', state: 'Delhi', seats: 130, rank: 6 },
+            { id: 7, name: 'Christian Medical College', state: 'Tamil Nadu', seats: 140, rank: 7 },
+            { id: 8, name: 'JIPMER Puducherry', state: 'Puducherry', seats: 135, rank: 8 }
+        ];
+
+        function showStep(step) {
+            document.querySelectorAll('[id^="step"][id$!="Indicator"]').forEach(el => {
+                if (el.id.match(/^step\d+$/)) el.classList.add('hidden');
+            });
+            document.getElementById('step' + step).classList.remove('hidden');
+            updateStepIndicator(step);
+            currentStep = step;
+            window.scrollTo(0, 0);
+        }
+
+        function updateStepIndicator(step) {
+            const steps = document.querySelectorAll('.step');
+            steps.forEach((s, idx) => {
+                s.classList.remove('active', 'completed');
+                if (idx + 1 === step) {
+                    s.classList.add('active');
+                } else if (idx + 1 < step) {
+                    s.classList.add('completed');
+                }
+            });
+        }
+
+        function goToStep1() { showStep(1); }
+        function goToStep2(e) { e.preventDefault(); showStep(2); }
+        function goToStep3(e) { e.preventDefault(); showStep(3); renderColleges(); }
+        function goToStep4(e) { e.preventDefault(); showStep(4); }
+        function goToStep5() { showStep(5); renderColleges(); }
+        function goToStep6() { showStep(6); }
+
+        function handleFileChange(e) {
+            const files = Array.from(e.target.files);
+            if (documents.length + files.length > 5) {
+                document.getElementById('step3Error').textContent = '✗ Maximum 5 documents allowed';
+                document.getElementById('step3Error').classList.remove('hidden');
+                return;
+            }
+            documents = [...documents, ...files];
+            renderFileList();
+        }
+
+        function renderFileList() {
+            const fileList = document.getElementById('fileList');
+            if (documents.length === 0) {
+                fileList.innerHTML = '';
+                return;
+            }
+            fileList.innerHTML = '<label>Selected Documents (' + documents.length + '):</label>' +
+                documents.map((doc, idx) => `
+                <div class="file-item">
+                    <span>✓ ${doc.name}</span>
+                    <button type="button" onclick="removeFile(${idx})" style="background: #ff9800; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Remove</button>
+                </div>
+            `).join('');
+        }
+
+        function removeFile(idx) {
+            documents.splice(idx, 1);
+            renderFileList();
+        }
+
+        function renderColleges() {
+            const collegeList = document.getElementById('collegeList');
+            collegeList.innerHTML = colleges.map(college => `
+                <div class="college-card ${selectedColleges.includes(college.id) ? 'selected' : ''}" onclick="toggleCollege(${college.id})">
+                    <div class="checkbox-custom"></div>
+                    <div class="college-rank">Rank #${college.rank}</div>
+                    <div class="college-name">${college.name}</div>
+                    <div class="college-info">📍 ${college.state}<br>👥 Seats: ${college.seats}</div>
+                </div>
+            `).join('');
+        }
+
+        function toggleCollege(collegeId) {
+            if (selectedColleges.includes(collegeId)) {
+                selectedColleges = selectedColleges.filter(id => id !== collegeId);
+            } else {
+                if (selectedColleges.length < 5) {
+                    selectedColleges.push(collegeId);
+                } else {
+                    document.getElementById('step5Error').textContent = '✗ Maximum 5 colleges can be selected';
+                    document.getElementById('step5Error').classList.remove('hidden');
+                    return;
+                }
+            }
+            document.getElementById('collegeCount').textContent = selectedColleges.length;
+            renderColleges();
+            document.getElementById('step5Error').classList.add('hidden');
+        }
+
+        function completePayment500() {
+            document.getElementById('step4Success').classList.remove('hidden');
+            setTimeout(() => showStep(5), 2000);
+        }
+
+        function completePayment20000() {
+            document.getElementById('step6Success').classList.remove('hidden');
+            setTimeout(() => showStep(7), 2000);
+        }
+
+        function restartApplication() {
+            selectedColleges = [];
+            documents = [];
+            document.getElementById('phone').value = '';
+            document.getElementById('dob').value = '';
+            document.getElementById('neetRoll').value = '';
+            document.getElementById('neetScore').value = '';
+            document.getElementById('category').value = '';
+            document.getElementById('fileInput').value = '';
+            renderFileList();
+            showStep(1);
+        }
+
+        // Initialize
+        renderColleges();
+    </script>
 </body>
 </html>
