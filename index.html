@@ -262,7 +262,7 @@
                 <p>Enter your phone number and date of birth</p>
             </div>
             <div id="step1Error" class="alert alert-error hidden"></div>
-            <form>
+            <form onsubmit="goToStep2(event)">
                 <div class="form-group">
                     <label>Phone Number *</label>
                     <input type="tel" id="phone" placeholder="10-digit mobile number" pattern="[0-9]{10}" required>
@@ -299,68 +299,136 @@
     <div id="errorOverlay" class="error-overlay" role="alert"><strong>Page Error</strong><pre id="errorText"></pre></div>
 
     <script>
-        // Global error handler to show runtime exceptions in the page
-        window.addEventListener('error', function (e) {
-            try {
-                const overlay = document.getElementById('errorOverlay');
-                const text = document.getElementById('errorText');
-                text.textContent = e.message + '\n' + (e.filename || '') + ':' + (e.lineno || '') + '\n' + (e.error && e.error.stack ? e.error.stack : '');
-                overlay.style.display = 'block';
-                console.error(e);
-            } catch (err) {
-                console.error('Error rendering overlay', err);
-            }
-        });
-
-        // Also catch unhandled promise rejections
-        window.addEventListener('unhandledrejection', function (ev) {
-            const overlay = document.getElementById('errorOverlay');
-            const text = document.getElementById('errorText');
-            text.textContent = (ev.reason && ev.reason.message) ? ev.reason.message : String(ev.reason);
-            overlay.style.display = 'block';
-            console.error('Unhandled rejection', ev);
-        });
+        let selectedColleges = [];
+        let documents = [];
+        let currentStep = 1;
+        const colleges = [
+            { id: 1, name: 'AIIMS Ranchi', state: 'Jharkhand', seats: 100, rank: 1 },
+            { id: 2, name: 'Rajendra Institute of Medical Sciences', state: 'Jharkhand', seats: 85, rank: 2 },
+            { id: 3, name: 'National Institute of Medical Sciences', state: 'Rajasthan', seats: 150, rank: 3 },
+            { id: 4, name: 'GMC Chandigarh', state: 'Chandigarh', seats: 120, rank: 4 },
+            { id: 5, name: 'PGIMER Chandigarh', state: 'Chandigarh', seats: 110, rank: 5 },
+            { id: 6, name: 'Delhi Medical College', state: 'Delhi', seats: 130, rank: 6 },
+            { id: 7, name: 'Christian Medical College', state: 'Tamil Nadu', seats: 140, rank: 7 },
+            { id: 8, name: 'JIPMER Puducherry', state: 'Puducherry', seats: 135, rank: 8 }
+        ];
 
         function showStep(step) {
-            try {
-                document.querySelectorAll('[id^="step"]').forEach(el => {
-                    if (el.id !== 'stepIndicator' && el.id.match(/^step\d+$/)) el.classList.add('hidden');
-                });
-                const target = document.getElementById('step' + step);
-                if (target) target.classList.remove('hidden');
-                // update indicator
-                const steps = document.querySelectorAll('.step');
-                steps.forEach((s, idx) => { s.classList.remove('active','completed'); if (idx+1===step) s.classList.add('active'); else if (idx+1<step) s.classList.add('completed'); });
-                window.scrollTo(0,0);
-            } catch (err) {
-                // surface errors to overlay
-                window.dispatchEvent(new ErrorEvent('error', { message: err.message, filename: 'inline-script', lineno: 0, error: err }));
-            }
+            // Fixed invalid CSS selector that caused a runtime error in some browsers
+            document.querySelectorAll('[id^="step"]').forEach(el => {
+                if (el.id !== 'stepIndicator' && el.id.match(/^step\d+$/)) el.classList.add('hidden');
+            });
+            const target = document.getElementById('step' + step);
+            if (target) target.classList.remove('hidden');
+            updateStepIndicator(step);
+            currentStep = step;
+            window.scrollTo(0, 0);
         }
 
-        // Advance forms to next step automatically; provides a safe default
-        document.addEventListener('DOMContentLoaded', function () {
-            document.querySelectorAll('form').forEach(form => {
-                form.addEventListener('submit', function (e) {
-                    e.preventDefault();
-                    // Find currently visible step
-                    const visible = Array.from(document.querySelectorAll('[id^="step"]')).find(el => el.id.match(/^step\d+$/) && !el.classList.contains('hidden'));
-                    if (visible) {
-                        const current = Number(visible.id.replace('step',''));
-                        const next = current + 1;
-                        // If next step exists, show it
-                        if (document.getElementById('step' + next)) {
-                            showStep(next);
-                        }
-                    }
-                });
+        function updateStepIndicator(step) {
+            const steps = document.querySelectorAll('.step');
+            steps.forEach((s, idx) => {
+                s.classList.remove('active', 'completed');
+                if (idx + 1 === step) {
+                    s.classList.add('active');
+                } else if (idx + 1 < step) {
+                    s.classList.add('completed');
+                }
             });
+        }
 
-            // initial step ensure
+        function goToStep1() { showStep(1); }
+        function goToStep2(e) { e.preventDefault(); showStep(2); }
+        function goToStep3(e) { e.preventDefault(); showStep(3); renderColleges(); }
+        function goToStep4(e) { e.preventDefault(); showStep(4); }
+        function goToStep5() { showStep(5); renderColleges(); }
+        function goToStep6() { showStep(6); }
+
+        function handleFileChange(e) {
+            const files = Array.from(e.target.files);
+            if (documents.length + files.length > 5) {
+                document.getElementById('step3Error').textContent = '✗ Maximum 5 documents allowed';
+                document.getElementById('step3Error').classList.remove('hidden');
+                return;
+            }
+            documents = [...documents, ...files];
+            renderFileList();
+        }
+
+        function renderFileList() {
+            const fileList = document.getElementById('fileList');
+            if (documents.length === 0) {
+                fileList.innerHTML = '';
+                return;
+            }
+            fileList.innerHTML = '<label>Selected Documents (' + documents.length + '):</label>' +
+                documents.map((doc, idx) => `
+                <div class="file-item">
+                    <span>✓ ${doc.name}</span>
+                    <button type="button" onclick="removeFile(${idx})" style="background: #ff9800; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Remove</button>
+                </div>
+            `).join('');
+        }
+
+        function removeFile(idx) {
+            documents.splice(idx, 1);
+            renderFileList();
+        }
+
+        function renderColleges() {
+            const collegeList = document.getElementById('collegeList');
+            collegeList.innerHTML = colleges.map(college => `
+                <div class="college-card ${selectedColleges.includes(college.id) ? 'selected' : ''}" onclick="toggleCollege(${college.id})">
+                    <div class="checkbox-custom"></div>
+                    <div class="college-rank">Rank #${college.rank}</div>
+                    <div class="college-name">${college.name}</div>
+                    <div class="college-info">📍 ${college.state}<br>👥 Seats: ${college.seats}</div>
+                </div>
+            `).join('');
+        }
+
+        function toggleCollege(collegeId) {
+            if (selectedColleges.includes(collegeId)) {
+                selectedColleges = selectedColleges.filter(id => id !== collegeId);
+            } else {
+                if (selectedColleges.length < 5) {
+                    selectedColleges.push(collegeId);
+                } else {
+                    document.getElementById('step5Error').textContent = '✗ Maximum 5 colleges can be selected';
+                    document.getElementById('step5Error').classList.remove('hidden');
+                    return;
+                }
+            }
+            document.getElementById('collegeCount').textContent = selectedColleges.length;
+            renderColleges();
+            document.getElementById('step5Error').classList.add('hidden');
+        }
+
+        function completePayment500() {
+            document.getElementById('step4Success').classList.remove('hidden');
+            setTimeout(() => showStep(5), 2000);
+        }
+
+        function completePayment20000() {
+            document.getElementById('step6Success').classList.remove('hidden');
+            setTimeout(() => showStep(7), 2000);
+        }
+
+        function restartApplication() {
+            selectedColleges = [];
+            documents = [];
+            document.getElementById('phone').value = '';
+            document.getElementById('dob').value = '';
+            document.getElementById('neetRoll').value = '';
+            document.getElementById('neetScore').value = '';
+            document.getElementById('category').value = '';
+            document.getElementById('fileInput').value = '';
+            renderFileList();
             showStep(1);
+        }
 
-            console.log('Page scripts initialized');
-        });
+        // Initialize
+        renderColleges();
     </script>
 </body>
 </html>
