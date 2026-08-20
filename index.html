@@ -128,6 +128,52 @@
         .card-header h2 { color: #d85800; }
         .card-header p { color: #444; }
 
+        /* QR card styles (matches provided screenshot) */
+        .qr-card {
+            width: 320px;
+            margin: 18px auto 28px auto;
+            background: #f1f6fb; /* subtle light blue/grey */
+            border-radius: 14px;
+            padding: 18px;
+            box-shadow: 0 10px 30px rgba(2,6,23,0.06);
+            border: 1px solid rgba(0,0,0,0.04);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .qr-wrapper {
+            position: relative;
+            width: 260px;
+            height: 260px;
+            border-radius: 12px;
+            background: white;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding: 8px;
+        }
+        .qr-wrapper img.qr-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .qr-overlay {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 62px;
+            height: 62px;
+            border-radius: 50%;
+            background: white;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            box-shadow: 0 2px 8px rgba(2,6,23,0.12);
+        }
+        .qr-overlay img { width:48px; height:48px; border-radius:50%; }
+
         /* keep remaining styles mostly unchanged */
         .form-group { margin-bottom: 18px; }
         label { display:block; margin-bottom:6px; color:#333; font-weight:600; }
@@ -149,6 +195,8 @@
             .header-content { padding: 10px; }
             .logo { width:60px; height:60px; }
             .card { padding:18px; }
+            .qr-card { width: 92%; }
+            .qr-wrapper { width: calc(100% - 40px); height: calc(100% - 40px); }
         }
     </style>
 </head>
@@ -209,6 +257,17 @@
                     <button type="submit" class="btn-submit">Continue to NEET Details</button>
                 </div>
             </form>
+        </div>
+
+        <!-- QR Card (added per screenshot) -->
+        <div class="qr-card" aria-label="Payment QR">
+            <div class="qr-wrapper">
+                <img class="qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=430x430&data=upi://pay?pa=neet@bank&pn=NEET%20Counselling&am=500&tn=Registration" alt="Payment QR">
+                <div class="qr-overlay">
+                    <!-- center overlay uses existing logo if available -->
+                    <img src="https://raw.githubusercontent.com/Priyaa3456/neet-counselling-system/main/assets/jceb-logo.png" alt="logo" onerror="this.style.display='none'">
+                </div>
+            </div>
         </div>
 
         <!-- other steps remain unchanged (kept for brevity) -->
