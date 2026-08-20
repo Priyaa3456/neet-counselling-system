@@ -174,6 +174,24 @@
         }
         .qr-overlay img { width:48px; height:48px; border-radius:50%; }
 
+        /* Error overlay (for runtime errors) */
+        .error-overlay {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background: rgba(255, 230, 230, 0.95);
+            color: #900;
+            border: 1px solid #f5c6cb;
+            padding: 12px 16px;
+            border-radius: 8px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+            max-width: 420px;
+            font-size: 13px;
+            z-index: 9999;
+            display: none;
+        }
+        .error-overlay pre { white-space: pre-wrap; max-height: 200px; overflow: auto; }
+
         /* keep remaining styles mostly unchanged */
         .form-group { margin-bottom: 18px; }
         label { display:block; margin-bottom:6px; color:#333; font-weight:600; }
@@ -244,7 +262,7 @@
                 <p>Enter your phone number and date of birth</p>
             </div>
             <div id="step1Error" class="alert alert-error hidden"></div>
-            <form onsubmit="goToStep2(event)">
+            <form>
                 <div class="form-group">
                     <label>Phone Number *</label>
                     <input type="tel" id="phone" placeholder="10-digit mobile number" pattern="[0-9]{10}" required>
@@ -278,20 +296,71 @@
         <p>© Jharkhand Combined Entrance Competitive Examination Board. All Rights Reserved.</p>
     </footer>
 
+    <div id="errorOverlay" class="error-overlay" role="alert"><strong>Page Error</strong><pre id="errorText"></pre></div>
+
     <script>
-        // Minimal navigation JS kept from previous version to ensure Continue works
+        // Global error handler to show runtime exceptions in the page
+        window.addEventListener('error', function (e) {
+            try {
+                const overlay = document.getElementById('errorOverlay');
+                const text = document.getElementById('errorText');
+                text.textContent = e.message + '\n' + (e.filename || '') + ':' + (e.lineno || '') + '\n' + (e.error && e.error.stack ? e.error.stack : '');
+                overlay.style.display = 'block';
+                console.error(e);
+            } catch (err) {
+                console.error('Error rendering overlay', err);
+            }
+        });
+
+        // Also catch unhandled promise rejections
+        window.addEventListener('unhandledrejection', function (ev) {
+            const overlay = document.getElementById('errorOverlay');
+            const text = document.getElementById('errorText');
+            text.textContent = (ev.reason && ev.reason.message) ? ev.reason.message : String(ev.reason);
+            overlay.style.display = 'block';
+            console.error('Unhandled rejection', ev);
+        });
+
         function showStep(step) {
-            document.querySelectorAll('[id^="step"]').forEach(el => {
-                if (el.id !== 'stepIndicator' && el.id.match(/^step\d+$/)) el.classList.add('hidden');
-            });
-            const target = document.getElementById('step' + step);
-            if (target) target.classList.remove('hidden');
-            // update indicator
-            const steps = document.querySelectorAll('.step');
-            steps.forEach((s, idx) => { s.classList.remove('active','completed'); if (idx+1===step) s.classList.add('active'); else if (idx+1<step) s.classList.add('completed'); });
-            window.scrollTo(0,0);
+            try {
+                document.querySelectorAll('[id^="step"]').forEach(el => {
+                    if (el.id !== 'stepIndicator' && el.id.match(/^step\d+$/)) el.classList.add('hidden');
+                });
+                const target = document.getElementById('step' + step);
+                if (target) target.classList.remove('hidden');
+                // update indicator
+                const steps = document.querySelectorAll('.step');
+                steps.forEach((s, idx) => { s.classList.remove('active','completed'); if (idx+1===step) s.classList.add('active'); else if (idx+1<step) s.classList.add('completed'); });
+                window.scrollTo(0,0);
+            } catch (err) {
+                // surface errors to overlay
+                window.dispatchEvent(new ErrorEvent('error', { message: err.message, filename: 'inline-script', lineno: 0, error: err }));
+            }
         }
-        function goToStep2(e){ if(e) e.preventDefault(); showStep(2); }
+
+        // Advance forms to next step automatically; provides a safe default
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('form').forEach(form => {
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    // Find currently visible step
+                    const visible = Array.from(document.querySelectorAll('[id^="step"]')).find(el => el.id.match(/^step\d+$/) && !el.classList.contains('hidden'));
+                    if (visible) {
+                        const current = Number(visible.id.replace('step',''));
+                        const next = current + 1;
+                        // If next step exists, show it
+                        if (document.getElementById('step' + next)) {
+                            showStep(next);
+                        }
+                    }
+                });
+            });
+
+            // initial step ensure
+            showStep(1);
+
+            console.log('Page scripts initialized');
+        });
     </script>
 </body>
 </html>
